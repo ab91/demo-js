@@ -1,0 +1,34 @@
+apiVersion: v1alpha
+kind: playwright
+showConsoleLog: false
+
+# Sauce Labs specific information
+sauce:
+    region: us-west-1 # or us-west-1
+    concurrency: 10 # Controls how many suites are executed at the same time.
+    metadata:
+        tags:
+            - playwright
+            - cross browser
+        build: 'Playwright: Cross Browser test set - $DATE'
+    sauceignore: .sauceignore
+
+# Playwright specific information
+playwright:
+    version: 1.33.0
+# Controls what files are available in the context of a test run (unless explicitly excluded by .sauceignore).
+rootDir: .
+
+suites:
+    - name: 'Swag Labs Login Chrome'
+      platformName: Windows 11
+      params:
+          browserName: chrome
+      testMatch: ['.*/.*.purchase.*']
+
+artifacts:
+    download:
+        match:
+            - '*'
+        when: always
+        directory: ./artifacts
